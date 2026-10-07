@@ -12,15 +12,15 @@
 
 ## Contents
 
-1. [2026-10-06 — Ok, so yesterday I spent some time getting some ideas from the starboard, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:](#2026-10-06-ok-so-yesterday-i-spent-some-time-getting-some-id)
+1. [2026-10-06 — Ok, so yesterday I spent some time getting some ideas from the starbie, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:](#2026-10-06-ok-so-yesterday-i-spent-some-time-getting-some-id)
 
 ## Design
 
-### 2026-10-06 — Ok, so yesterday I spent some time getting some ideas from the starboard, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:
+### 2026-10-06 — Ok, so yesterday I spent some time getting some ideas from the starbie, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:
 
 **1.7h**
 
-Ok, so yesterday I spent some time getting some ideas from the starboard, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:
+Ok, so yesterday I spent some time getting some ideas from the starbie, and I thought that a moonboard would fit the vibe. I first sketched a version of it out on my notebook like this:
 
 ![IMG_1328](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/dV5DNWN0CEIJqjXEjV5AkLty6hRHMTTp/35e109d1b16d5b5ccae8c889c018a3a1863e2563e2ecf6586db9655d465bb1e0.png)
 
