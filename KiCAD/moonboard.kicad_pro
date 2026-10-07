@@ -645,13 +645,18 @@
       {
         "filename": "moonboard.kicad_sch",
         "name": "moonboard",
-        "uuid": "00000000-0000-0000-0000-000000000000"
+        "uuid": "5d43ddf9-77f1-44b4-b552-018e852deebc"
       }
     ],
-    "used_designators": "",
+    "used_designators": "RV1,R1,J1-2,#PWR1-13,U1-2",
     "variants": []
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "5d43ddf9-77f1-44b4-b552-018e852deebc",
+      "moonboard"
+    ]
+  ],
   "text_variables": {},
   "tuning_profiles": {
     "meta": {
