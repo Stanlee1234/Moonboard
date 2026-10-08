@@ -3471,7 +3471,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 137.16 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -3553,7 +3553,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 123.19 60.96 90)
 			(hide yes)
 			(show_name no)
@@ -3657,7 +3657,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 139.7 60.96 90)
 			(hide yes)
 			(show_name no)
@@ -3849,7 +3849,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 139.7 40.64 90)
 			(hide yes)
 			(show_name no)
@@ -3953,7 +3953,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "FootprintsnModels:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm"
 			(at 111.76 113.03 0)
 			(hide yes)
 			(show_name no)
@@ -4379,7 +4379,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 123.19 40.64 90)
 			(hide yes)
 			(show_name no)
@@ -4480,7 +4480,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 104.14 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -4791,7 +4791,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 120.65 35.56 0)
 			(hide yes)
 			(show_name no)
@@ -4870,7 +4870,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 120.65 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -5028,7 +5028,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "FootprintsnModels:MODULE_GY-521"
 			(at 101.6 86.36 0)
 			(hide yes)
 			(show_name no)
@@ -5127,7 +5127,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 53.34 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -5207,7 +5207,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "FootprintsnModels:OLED_SSD1306_I2C_0.96"
 			(at 74.93 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -5369,7 +5369,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 137.16 35.56 0)
 			(hide yes)
 			(show_name no)
@@ -5605,7 +5605,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 106.68 40.64 90)
 			(hide yes)
 			(show_name no)
@@ -5709,7 +5709,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 106.68 60.96 90)
 			(hide yes)
 			(show_name no)
@@ -5890,7 +5890,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Seeed_Studio_XIAO_Series:XIAO-ESP32-C3-SMD"
+		(property "Footprint" "XIAO_footprints:XIAO-ESP32-C3-SMD"
 			(at 16.002 76.454 0)
 			(hide yes)
 			(show_name no)
@@ -6029,7 +6029,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "PCM_ScottoKeebs_Hotswap:Hotswap_MX_1.00u"
 			(at 104.14 35.56 0)
 			(hide yes)
 			(show_name no)
