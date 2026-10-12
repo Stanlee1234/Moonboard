@@ -21,7 +21,7 @@
 | [MPU6050](https://www.aliexpress.us/item/2251832613625365.html?src=google&src=google&albch=shopping&acnt=179-224-6891&isdl=y&slnk=&plac=&mtctp=&albbt=Google_7_shopping&aff_platform=google&aff_short_key=_oFgTQeV&gclsrc=aw.ds&albagn=888888&ds_e_adid=&ds_e_matchtype=&ds_e_device=c&ds_e_network=x&ds_e_product_group_id=&ds_e_product_id=en2251832613625365&ds_e_product_merchant_id=107726890&ds_e_product_country=US&ds_e_product_language=en&ds_e_product_channel=online&ds_e_product_store_id=&ds_url_v=2&albcp=23128330536&albag=&isSmbAutoCall=false&needSmbHouyi=false&gad_source=1&gad_campaignid=23128364043&gbraid=0AAAABBR8xId71v7JEzj3GCNMI_obGyoZu&gclid=Cj0KCQjwuJLWBhD_ARIsAIBcRUzByRQWG5s5uZcvW2DSlODD7uN659R_TFhFunFGpBN41gWxURpL24oaAk24EALw_wcB&gatewayAdapt=glo2usa) | Gyroscope for the game | 1 | $1.90 | $1.90 | [AliExpress](https://www.aliexpress.us/item/2251832613625365.html?src=google&src=google&albch=shopping&acnt=179-224-6891&isdl=y&slnk=&plac=&mtctp=&albbt=Google_7_shopping&aff_platform=google&aff_short_key=_oFgTQeV&gclsrc=aw.ds&albagn=888888&ds_e_adid=&ds_e_matchtype=&ds_e_device=c&ds_e_network=x&ds_e_product_group_id=&ds_e_product_id=en2251832613625365&ds_e_product_merchant_id=107726890&ds_e_product_country=US&ds_e_product_language=en&ds_e_product_channel=online&ds_e_product_store_id=&ds_url_v=2&albcp=23128330536&albag=&isSmbAutoCall=false&needSmbHouyi=false&gad_source=1&gad_campaignid=23128364043&gbraid=0AAAABBR8xId71v7JEzj3GCNMI_obGyoZu&gclid=Cj0KCQjwuJLWBhD_ARIsAIBcRUzByRQWG5s5uZcvW2DSlODD7uN659R_TFhFunFGpBN41gWxURpL24oaAk24EALw_wcB&gatewayAdapt=glo2usa) |
 | [PCB](https://NotApplicable.com) | Well, the actual board | 1 | $1.56 | $1.56 | [JLCPCB (No link)](https://NotApplicable.com) |
 | **Parts subtotal** | — | — | — | **$23.36** | — |
-| **Tax & shipping** | — | — | — | **$5.65** | — |
-| **Total** | — | — | — | **$29.01** | — |
+| **Tax & shipping** | — | — | — | **$0.00** | — |
+| **Total** | — | — | — | **$23.36** | — |
 
-$0.99 left of the tier's funding.
+$6.64 left of the tier's funding.
