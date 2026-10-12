@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moonboard</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .oled-screen {
+      image-rendering: pixelated;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+    .keycap {
+      user-select: none;
+      transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .keycap:active, .keycap.active {
+      transform: translateY(2px) scale(0.97);
+    }
+  </style>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-3">
+
+  <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-xl max-w-xl mx-auto flex flex-col gap-4">
+
+    <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🌕</span>
+        <div>
+          <h2 class="font-bold text-sm text-[var(--foreground)] leading-tight">Moonboard Hardware Testbench</h2>
+          <p class="text-xs text-[var(--muted-foreground)]">XIAO ESP32-C3 • 128×64 OLED • 2×3 Key Matrix • MPU6050 • DHT11 • Pot</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        LIVE SIMULATOR
+      </div>
+    </div>
+
+    <!-- oled 128x64 display -->
+    <div class="flex justify-center">
+      <div class="p-2.5 rounded-xl bg-slate-950 border-2 border-slate-800 shadow-inner flex flex-col items-center">
+        <canvas id="oled" width="320" height="160" class="oled-screen rounded bg-[#050b14]"></canvas>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+
+      <!-- potentiometer -->
+      <div class="sm:col-span-1 bg-[var(--background)] border border-[var(--border)] rounded-xl p-2.5 flex flex-col items-center justify-between gap-1.5">
+        <div class="text-[11px] font-bold tracking-wider text-[var(--muted-foreground)] text-center">
+          RV1 POT<br><span class="text-sky-400 text-[10px]">PIN D10</span>
+        </div>
+        <div class="relative w-12 h-12 rounded-full border-2 border-slate-600 bg-gradient-to-b from-slate-700 to-slate-900 shadow-md flex items-center justify-center">
+          <div id="knobDot" class="w-1 h-3.5 bg-sky-400 rounded absolute top-1 transition-transform"></div>
+        </div>
+        <input type="range" id="potSlider" min="0" max="100" value="50" class="w-full accent-sky-400 cursor-pointer">
+        <span id="potLabel" class="text-xs font-semibold text-sky-400">50%</span>
+      </div>
+
+      <!-- 2x3 keys -->
+      <div class="sm:col-span-3 flex flex-col gap-2">
+        <div class="grid grid-cols-3 gap-2">
+          <button id="key-0" class="keycap p-2 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-sky-600 border border-slate-700 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-100">SW1</span>
+            <span class="text-[10px] text-sky-300">Gyro Test</span>
+            <span class="text-[9px] text-slate-400">[Q]</span>
+          </button>
+          <button id="key-1" class="keycap p-2 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-sky-600 border border-slate-700 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-100">SW2</span>
+            <span class="text-[10px] text-amber-300">Menu/Back</span>
+            <span class="text-[9px] text-slate-400">[W]</span>
+          </button>
+          <button id="key-2" class="keycap p-2 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-sky-600 border border-slate-700 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-100">SW3</span>
+            <span class="text-[10px] text-purple-300">Pot Test</span>
+            <span class="text-[9px] text-slate-400">[E]</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <button id="key-3" class="keycap p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 active:bg-sky-600 border border-slate-800 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-200">SW4</span>
+            <span class="text-[10px] text-slate-400">Phase Cycle</span>
+            <span class="text-[9px] text-slate-500">[A]</span>
+          </button>
+          <button id="key-4" class="keycap p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 active:bg-sky-600 border border-slate-800 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-200">SW5</span>
+            <span class="text-[10px] text-rose-300">Pet (Hearts)</span>
+            <span class="text-[9px] text-slate-500">[S]</span>
+          </button>
+          <button id="key-5" class="keycap p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 active:bg-sky-600 border border-slate-800 flex flex-col items-center justify-center shadow">
+            <span class="text-xs font-bold text-slate-200">SW6</span>
+            <span class="text-[10px] text-slate-400">Joy Hop</span>
+            <span class="text-[9px] text-slate-500">[D]</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- sensors -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-[var(--border)]">
+
+      <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-2.5 flex flex-col gap-2">
+        <div class="flex justify-between items-center text-xs">
+          <span class="font-semibold text-[var(--foreground)]">MPU-6050 Tilt</span>
+          <span id="tiltText" class="font-mono text-sky-400 text-[11px]">R: 0° | P: 0°</span>
+        </div>
+        <div id="tiltPad" class="w-full h-16 bg-slate-950 border border-dashed border-slate-700 rounded-lg relative cursor-crosshair overflow-hidden flex items-center justify-center">
+          <div class="absolute w-full h-[1px] bg-slate-800 pointer-events-none"></div>
+          <div class="absolute h-full w-[1px] bg-slate-800 pointer-events-none"></div>
+          <div id="tiltDot" class="w-3 h-3 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b] absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none" style="left:50%; top:50%;"></div>
+          <span class="text-[10px] text-slate-500 pointer-events-none select-none">Drag to tilt board</span>
+        </div>
+        <button id="shakeBtn" class="w-full py-1 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 active:scale-95 transition text-slate-200 border border-slate-700">
+          💥 Shake Board
+        </button>
+      </div>
+
+      <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-2.5 flex flex-col justify-between gap-2">
+        <span class="text-xs font-semibold text-[var(--foreground)]">DHT11 Climate Sensor</span>
+        
+        <div class="flex flex-col gap-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-[var(--muted-foreground)]">Ambient Temp</span>
+            <span id="tempText" class="font-mono font-semibold text-amber-400">23.5 °C</span>
+          </div>
+          <input type="range" id="tempSlider" min="5" max="45" value="23.5" step="0.5" class="w-full accent-amber-400 cursor-pointer">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <div class="flex justify-between text-xs">
+            <span class="text-[var(--muted-foreground)]">Humidity</span>
+            <span id="humText" class="font-mono font-semibold text-cyan-400">45 %</span>
+          </div>
+          <input type="range" id="humSlider" min="10" max="95" value="45" step="1" class="w-full accent-cyan-400 cursor-pointer">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const canvas = document.getElementById('oled');
+    const ctx = canvas.getContext('2d');
+    const W = 128, H = 64, SCALE = 2.5;
+    const fb = new Uint8Array(W * H);
+
+    function clearDisplay() { fb.fill(0); }
+    function setPixel(x, y, c = 1) {
+      x = Math.round(x); y = Math.round(y);
+      if (x >= 0 && x < W && y >= 0 && y < H) fb[y * W + x] = c;
+    }
+    function drawLine(x0, y0, x1, y1, c = 1) {
+      x0 = Math.round(x0); y0 = Math.round(y0);
+      x1 = Math.round(x1); y1 = Math.round(y1);
+      const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+      const dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+      let err = dx + dy;
+      while (true) {
+        setPixel(x0, y0, c);
+        if (x0 === x1 && y0 === y1) break;
+        const e2 = 2 * err;
+        if (e2 >= dy) { err += dy; x0 += sx; }
+        if (e2 <= dx) { err += dx; y0 += sy; }
+      }
+    }
+    function drawRect(x, y, w, h, c = 1) {
+      for (let i = x; i < x + w; i++) { setPixel(i, y, c); setPixel(i, y + h - 1, c); }
+      for (let j = y; j < y + h; j++) { setPixel(x, j, c); setPixel(x + w - 1, j, c); }
+    }
+    function fillRect(x, y, w, h, c = 1) {
+      for (let j = y; j < y + h; j++) {
+        for (let i = x; i < x + w; i++) setPixel(i, j, c);
+      }
+    }
+    function drawCircle(cx, cy, r, c = 1) {
+      let x = r, y = 0, err = 0;
+      while (x >= y) {
+        setPixel(cx + x, cy + y, c); setPixel(cx + y, cy + x, c);
+        setPixel(cx - y, cy + x, c); setPixel(cx - x, cy + y, c);
+        setPixel(cx - x, cy - y, c); setPixel(cx - y, cy - x, c);
+        setPixel(cx + y, cy - x, c); setPixel(cx + x, cy - y, c);
+        y++; err += 1 + 2*y;
+        if (2*(err-x) + 1 > 0) { x--; err += 1 - 2*x; }
+      }
+    }
+    function fillCircle(cx, cy, r, c = 1) {
+      for (let dy = -r; dy <= r; dy++) {
+        for (let dx = -r; dx <= r; dx++) {
+          if (dx*dx + dy*dy <= r*r) setPixel(cx + dx, cy + dy, c);
+        }
+      }
+    }
+
+    const FONT_5X7 = {
+      ' ': [0,0,0,0,0], '!': [0,0,95,0,0], '"': [0,7,0,7,0], '#': [20,127,20,127,20],
+      '$': [36,42,127,42,18], '%': [35,19,8,100,98], '&': [54,73,85,34,80], "'": [0,5,3,0,0],
+      '(': [0,28,34,65,0], ')': [0,65,34,28,0], '*': [20,8,62,8,20], '+': [8,8,62,8,8],
+      ',': [0,80,48,0,0], '-': [8,8,8,8,8], '.': [0,96,96,0,0], '/': [32,16,8,4,2],
+      '0': [62,81,73,69,62], '1': [0,66,127,64,0], '2': [66,97,81,73,70], '3': [33,65,69,75,49],
+      '4': [24,20,18,127,16], '5': [39,69,69,69,57], '6': [60,74,73,73,48], '7': [1,113,9,5,3],
+      '8': [54,73,73,73,54], '9': [6,73,73,41,30], ':': [0,54,54,0,0], ';': [0,91,59,0,0],
+      '<': [8,20,34,65,0], '=': [20,20,20,20,20], '>': [0,65,34,20,8], '?': [2,1,81,9,6],
+      'A': [126,17,17,17,126], 'B': [127,73,73,73,54], 'C': [62,65,65,65,34], 'D': [127,65,65,34,28],
+      'E': [127,73,73,73,65], 'F': [127,9,9,9,1], 'G': [62,65,73,73,58], 'H': [127,8,8,8,127],
+      'I': [0,65,127,65,0], 'J': [32,64,65,63,1], 'K': [127,8,20,34,65], 'L': [127,64,64,64,64],
+      'M': [127,2,12,2,127], 'N': [127,4,8,16,127], 'O': [62,65,65,65,62], 'P': [127,9,9,9,6],
+      'Q': [62,65,81,33,94], 'R': [127,9,25,41,70], 'S': [70,73,73,73,49], 'T': [1,1,127,1,1],
+      'U': [63,64,64,64,63], 'V': [31,32,64,32,31], 'W': [127,32,24,32,127], 'X': [99,20,8,20,99],
+      'Y': [7,8,112,8,7], 'Z': [97,81,73,69,67], '[': [0,127,65,65,0], ']': [0,65,65,127,0]
+    };
+
+    function drawText(text, x, y, c = 1) {
+      let curX = Math.round(x);
+      let curY = Math.round(y);
+      for (let i = 0; i < text.length; i++) {
+        const glyph = FONT_5X7[text[i].toUpperCase()] || FONT_5X7['?'];
+        for (let col = 0; col < 5; col++) {
+          const bits = glyph[col];
+          for (let row = 0; row < 7; row++) {
+            if (bits & (1 << row)) setPixel(curX + col, curY + row, c);
+          }
+        }
+        curX += 6;
+      }
+    }
+
+    function renderScreen() {
+      const imgData = ctx.createImageData(canvas.width, canvas.height);
+      const d = imgData.data;
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          const lit = fb[y * W + x] === 1;
+          const r = lit ? 230 : 6, g = lit ? 245 : 12, b = lit ? 255 : 22;
+          for (let dy = 0; dy < SCALE; dy++) {
+            for (let dx = 0; dx < SCALE; dx++) {
+              const px = Math.floor(x * SCALE + dx);
+              const py = Math.floor(y * SCALE + dy);
+              if (px < canvas.width && py < canvas.height) {
+                const idx = (py * canvas.width + px) * 4;
+                const isBorder = (dx === Math.floor(SCALE) - 1 || dy === Math.floor(SCALE) - 1);
+                d[idx] = isBorder ? Math.floor(r * 0.82) : r;
+                d[idx+1] = isBorder ? Math.floor(g * 0.82) : g;
+                d[idx+2] = isBorder ? Math.floor(b * 0.82) : b;
+                d[idx+3] = 255;
+              }
+            }
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+    }
+
+    let currentScreen = 'MENU';
+    const keysDown = [false, false, false, false, false, false];
+    const keyLabels = ["SW1", "SW2", "SW3", "SW4", "SW5", "SW6"];
+    let ambientTemp = 23.5;
+    let ambientHum = 45;
+    let potPercent = 50;
+    let tiltRoll = 0;
+    let tiltPitch = 0;
+    let isShaking = false;
+    let shakeTimer = 0;
+    let moonPhase = 4;
+    let heartsUntil = 0;
+
+    function triggerHearts() {
+      heartsUntil = Date.now() + 1400;
+    }
+
+    function drawMoon(cx, cy, phase) {
+      const R = 13;
+      const phi = (phase / 8) * Math.PI * 2;
+      const cosPhi = Math.cos(phi);
+
+      for (let dy = -R; dy <= R; dy++) {
+        for (let dx = -R; dx <= R; dx++) {
+          const dist = Math.hypot(dx, dy);
+          if (dist <= R) {
+            const px = cx + dx, py = cy + dy;
+            if (dist >= R - 1.2) {
+              setPixel(px, py, 1);
+            } else {
+              const r_y = Math.sqrt(Math.max(0, R * R - dy * dy));
+              const x_term = cosPhi * r_y;
+              let lit = false;
+              if (phase === 0) lit = false;
+              else if (phase === 4) lit = true;
+              else if (phase < 4) lit = cosPhi >= 0 ? (dx >= x_term) : (dx >= 0 || dx >= x_term);
+              else lit = cosPhi <= 0 ? (dx <= x_term || dx <= 0) : (dx <= x_term);
+              if (lit) setPixel(px, py, 1);
+            }
+          }
+        }
+      }
+
+      setPixel(cx - 4, cy - 2, 0);
+      setPixel(cx + 4, cy - 2, 0);
+      drawLine(cx - 2, cy + 3, cx + 2, cy + 3, 0);
+    }
+
+    function update() {
+      const now = Date.now();
+      if (isShaking && now > shakeTimer) isShaking = false;
+
+      clearDisplay();
+
+      // menu view
+      if (currentScreen === 'MENU') {
+        drawText("Moonboard", 2, 1);
+        drawLine(0, 9, W, 9, 1);
+
+        // 6 buttons on screen
+        let activeKeyIdx = -1;
+        for (let r = 0; r < 2; r++) {
+          for (let c = 0; c < 3; c++) {
+            const idx = r * 3 + c;
+            const bx = 4 + c * 22;
+            const by = 13 + r * 16;
+            const bw = 19, bh = 13;
+
+            if (keysDown[idx]) {
+              activeKeyIdx = idx;
+              fillRect(bx, by, bw, bh, 1);
+              drawText(keyLabels[idx], bx + 2, by + 3, 0);
+            } else {
+              drawRect(bx, by, bw, bh, 1);
+              drawText(keyLabels[idx], bx + 2, by + 3, 1);
+            }
+          }
+        }
+
+        // dht11 readout
+        drawText("TEMP:", 72, 13);
+        drawText(`${ambientTemp.toFixed(1)}C`, 72, 22);
+        drawText("HUMID:", 72, 32);
+        drawText(`${ambientHum}%`, 72, 41);
+
+        // moon character
+        const floatY = Math.sin(now / 350) * 1.5;
+        drawMoon(114, 28 + floatY, moonPhase);
+
+        if (now < heartsUntil) {
+          drawText("♥", 110, 10 - (heartsUntil - now) / 100);
+        }
+
+        drawLine(0, 48, W, 48, 1);
+        if (activeKeyIdx >= 0) {
+          drawText(`* ${keyLabels[activeKeyIdx]} PRESSED *`, 6, 53);
+        } else {
+          drawText("SW1:GYRO   SW3:POT", 4, 53);
+        }
+      }
+
+      // gyro view (sw1)
+      else if (currentScreen === 'GYRO') {
+        drawText("GYRO & IMU TEST", 2, 1);
+        drawLine(0, 9, W, 9, 1);
+
+        const boxX = 6, boxY = 13, boxS = 40;
+        drawRect(boxX, boxY, boxS, boxS, 1);
+        drawLine(boxX + 2, boxY + boxS / 2, boxX + boxS - 2, boxY + boxS / 2, 1);
+        drawLine(boxX + boxS / 2, boxY + 2, boxX + boxS / 2, boxY + boxS - 2, 1);
+        drawCircle(boxX + boxS / 2, boxY + boxS / 2, 6, 1);
+
+        const bX = Math.max(boxX + 4, Math.min(boxX + boxS - 4, (boxX + boxS / 2) + Math.round(tiltRoll / 2.5)));
+        const bY = Math.max(boxY + 4, Math.min(boxY + boxS - 4, (boxY + boxS / 2) + Math.round(tiltPitch / 2.5)));
+        fillCircle(bX, bY, 3, 1);
+
+        drawText(`ROLL:  ${Math.round(tiltRoll)} DEG`, 52, 13);
+        drawText(`PITCH: ${Math.round(tiltPitch)} DEG`, 52, 23);
+        drawText(`TEMP:  ${(ambientTemp - 0.2).toFixed(1)}C`, 52, 33);
+        drawText(isShaking ? "SHAKE DETECTED" : "MOTION STABLE", 52, 43);
+
+        drawLine(0, 55, W, 55, 1);
+        drawText("[SW2] BACK TO MENU", 12, 57);
+      }
+
+      // pot view (sw3)
+      else if (currentScreen === 'POT') {
+        drawText("POTENTIOMETER TEST", 2, 1);
+        drawLine(0, 9, W, 9, 1);
+
+        const barX = 14, barY = 16, barW = 100, barH = 14;
+        drawRect(barX, barY, barW, barH, 1);
+        const fillW = Math.round((potPercent / 100) * (barW - 4));
+        if (fillW > 0) fillRect(barX + 2, barY + 2, fillW, barH - 4, 1);
+
+        drawLine(barX + barW / 4, barY + barH, barX + barW / 4, barY + barH + 3, 1);
+        drawLine(barX + barW / 2, barY + barH, barX + barW / 2, barY + barH + 4, 1);
+        drawLine(barX + (3 * barW) / 4, barY + barH, barX + (3 * barW) / 4, barY + barH + 3, 1);
+
+        drawText(`PERCENT: ${potPercent}%`, 18, 35);
+        drawText(`PIN D10: ${potPercent > 50 ? 'HIGH' : 'LOW'} (${Math.round(potPercent * 40.95)})`, 18, 45);
+
+        drawLine(0, 55, W, 55, 1);
+        drawText("[SW2] BACK TO MENU", 12, 57);
+      }
+
+      renderScreen();
+      requestAnimationFrame(update);
+    }
+
+    function pressKey(idx) {
+      keysDown[idx] = true;
+      const el = document.getElementById(`key-${idx}`);
+      if (el) el.classList.add('active');
+
+      if (idx === 0) currentScreen = 'GYRO';
+      else if (idx === 1) currentScreen = 'MENU';
+      else if (idx === 2) currentScreen = 'POT';
+      else if (idx === 3) moonPhase = (moonPhase + 1) % 8;
+      else if (idx === 4 || idx === 5) triggerHearts();
+    }
+
+    function releaseKey(idx) {
+      keysDown[idx] = false;
+      const el = document.getElementById(`key-${idx}`);
+      if (el) el.classList.remove('active');
+    }
+
+    for (let i = 0; i < 6; i++) {
+      const b = document.getElementById(`key-${i}`);
+      b.addEventListener('mousedown', () => pressKey(i));
+      b.addEventListener('mouseup', () => releaseKey(i));
+      b.addEventListener('mouseleave', () => releaseKey(i));
+    }
+
+    const keyMap = { 'q': 0, 'w': 1, 'e': 2, 'a': 3, 's': 4, 'd': 5 };
+    window.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      if (keyMap[k] !== undefined && !keysDown[keyMap[k]]) pressKey(keyMap[k]);
+    });
+    window.addEventListener('keyup', (e) => {
+      const k = e.key.toLowerCase();
+      if (keyMap[k] !== undefined) releaseKey(keyMap[k]);
+    });
+
+    const tiltPad = document.getElementById('tiltPad');
+    const tiltDot = document.getElementById('tiltDot');
+    const tiltText = document.getElementById('tiltText');
+    let isDragging = false;
+
+    function handleTilt(e) {
+      const r = tiltPad.getBoundingClientRect();
+      const x = Math.max(0, Math.min(r.width, e.clientX - r.left));
+      const y = Math.max(0, Math.min(r.height, e.clientY - r.top));
+      tiltDot.style.left = `${x}px`;
+      tiltDot.style.top = `${y}px`;
+
+      tiltRoll = ((x / r.width) - 0.5) * 60;
+      tiltPitch = ((y / r.height) - 0.5) * 60;
+      tiltText.textContent = `R: ${Math.round(tiltRoll)}° | P: ${Math.round(tiltPitch)}°`;
+    }
+
+    tiltPad.addEventListener('mousedown', (e) => { isDragging = true; handleTilt(e); });
+    window.addEventListener('mousemove', (e) => { if (isDragging) handleTilt(e); });
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        tiltRoll = 0; tiltPitch = 0;
+        tiltDot.style.left = '50%'; tiltDot.style.top = '50%';
+        tiltText.textContent = `R: 0° | P: 0°`;
+      }
+    });
+
+    document.getElementById('shakeBtn').addEventListener('click', () => {
+      isShaking = true;
+      shakeTimer = Date.now() + 2500;
+    });
+
+    const potSlider = document.getElementById('potSlider');
+    const potLabel = document.getElementById('potLabel');
+    const knobDot = document.getElementById('knobDot');
+    potSlider.addEventListener('input', (e) => {
+      potPercent = parseInt(e.target.value);
+      potLabel.textContent = `${potPercent}%`;
+      const deg = (potPercent / 100) * 270 - 135;
+      knobDot.style.transform = `rotate(${deg}deg) translate(0, -10px)`;
+    });
+
+    const tempSlider = document.getElementById('tempSlider');
+    const tempText = document.getElementById('tempText');
+    tempSlider.addEventListener('input', (e) => {
+      ambientTemp = parseFloat(e.target.value);
+      tempText.textContent = `${ambientTemp.toFixed(1)} °C`;
+    });
+
+    const humSlider = document.getElementById('humSlider');
+    const humText = document.getElementById('humText');
+    humSlider.addEventListener('input', (e) => {
+      ambientHum = parseInt(e.target.value);
+      humText.textContent = `${ambientHum} %`;
+    });
+
+    requestAnimationFrame(update);
+  </script>
+</body>
+</html>
+
+
+
+!
