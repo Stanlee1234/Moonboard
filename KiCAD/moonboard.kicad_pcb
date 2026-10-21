@@ -4186,7 +4186,7 @@
 		(property "Reference" "RV1"
 			(at 2.8 -4.7 0)
 			(layer "F.SilkS")
-			(uuid "49c71440-d571-487f-a883-dfbbde4f0af6")
+			(uuid "b1b86a52-fa86-42c1-9f50-02b6703f2016")
 			(effects
 				(font
 					(size 1 1)
@@ -4197,7 +4197,7 @@
 		(property "Value" "R_Potentiometer"
 			(at 7.5 10.4 0)
 			(layer "F.Fab")
-			(uuid "d39a81b5-b72f-4bfd-9574-27b9f7a0eae1")
+			(uuid "ee60a966-73db-477a-96d6-2759caebb590")
 			(effects
 				(font
 					(size 1 1)
@@ -4210,7 +4210,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "e1114d03-388f-48c7-9312-bc61ae80068f")
+			(uuid "290e2982-20ff-4211-870d-3c54aabe8151")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4223,7 +4223,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "ff9b6eca-dd00-4cc7-bcbd-b626b44178d6")
+			(uuid "dea6d8c8-6820-4db7-bf63-f8f8e132b498")
 			(effects
 				(font
 					(size 1.27 1.27)
